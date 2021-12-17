@@ -1,0 +1,316 @@
+﻿@page
+@model TrainDEv.Pages.register_trainerModel
+@{
+}
+<style>
+    body {
+        background-image: url('../images/Background.png');
+    }
+
+    .topnav {
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+        .topnav a {
+            float: left;
+            color: #050505;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .topnav a.active {
+                background-color: #04AA6D;
+                color: white;
+            }
+
+    @*text*@ .mytxt {
+        color: #333;
+        line-height: normal;
+        font-family: "Microsoft YaHei",Tahoma,Verdana,SimSun;
+        font-style: normal;
+        font-variant: normal;
+        font-size-adjust: none;
+        font-stretch: normal;
+        font-weight: normal;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        padding-top: 4px;
+        padding-right: 4px;
+        padding-bottom: 4px;
+        padding-left: 4px;
+        font-size: 15px;
+        outline-width: medium;
+        outline-style: none;
+        outline-color: invert;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        text-shadow: 0px 1px 2px #fff;
+        background-attachment: scroll;
+        background-repeat: repeat-x;
+        background-position-x: left;
+        background-position-y: top;
+        background-size: auto;
+        background-origin: padding-box;
+        background-clip: border-box;
+        background-color: rgb(255,255,255);
+        margin-right: 8px;
+        border-top-color: #ccc;
+        border-right-color: #ccc;
+        border-bottom-color: #ccc;
+        border-left-color: #ccc;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-top-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+        border-left-style: solid;
+    }
+
+    .mytxt:focus {
+        border: 1px solid #fafafa;
+        -webkit-box-shadow: 0px 0px 6px #007eff;
+        -moz-box-shadow: 0px 0px 5px #007eff;
+        box-shadow: 0px 0px 5px #007eff;
+    }
+
+    .button1 {
+        width: 140px;
+        height: 50px;
+        line-height: 50px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: crimson;
+        background-color: #fff;
+        border: none;
+        border-radius: 25px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        outline: none;
+        text-align: center;
+        cursor: pointer;
+        display: grid;
+    }
+
+        .button1:hover {
+            background-color: aliceblue;
+            box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+            color: crimson;
+        }
+
+        .button1:focus {
+            background-color: lavender;
+            box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+            color: crimson;
+        }
+
+        .button1:active {
+            background-color: white;
+            box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+            color: crimson;
+            transform: translateY(-7px);
+        }
+
+    .checked {
+        color: orange;
+    }
+
+    /*For banner*/
+    .banners-container {
+        display: table;
+        width: 100%;
+        height: 100%;
+        table-layout: fixed;
+    }
+        /*For banner*/
+        .banners-container .banner {
+            display: table-cell;
+            height: 100;
+            width: 25%;
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+    /*Text within vertical banner*/
+    h1, h6 {
+        color: white;
+        text-align: center;
+    }
+    /*Setup account button*/
+    .button {
+        background-color: white;
+        border: none;
+        border-radius: 25px;
+        color: cornflowerblue;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        display: grid;
+    }
+
+</style>
+<body>
+    
+
+    <center>
+        <h1>@ViewData["Title"]</h1>
+
+        <b>hi,welcome to TrainerPro, Please register your account here</b>
+
+        <div class="banners-container">
+            <div class="banner" style="background-image: url('../img/bluegradient.jpg');">
+                <article class="banner">
+                    <section class="banner-copy">
+                        <h1>Are you a trainee?</h1>
+                        <br />
+                        <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</h6>
+                        <br />
+                        <a href="/register_trainee" class="button">Setup your account</a>
+                    </section>
+                </article>
+            </div>
+
+            <form action=" " method="post">
+                <table>
+                    <tr>
+                        <td height="50px">Username:<font color="red">*</font></td>
+                        <td><input type="text" name="tranee" class="mytxt" placeholder="Enter User Name Here" /></td>
+
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Password:<font color="red">*</font></td>
+                        <td>
+                            <input type="password" name="traneePW" class="mytxt" placeholder="Enter Password Here" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Gender:<font color="red">*</font></td>
+                        <td>
+                            <input type="radio" name="gender" />Male
+                            <input type="radio" name="gender" />Femail
+                            <input type="radio" name="gender" />Others
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Phone:<font color="red">*</font></td>
+                        <td>
+                            <select>
+                                <option selected>+61</option>
+                                <option>+51</option>
+                                <option>+41</option>
+                                <option>+31</option>
+                                <option>+21</option>
+                            </select>
+                            <input type="text" name="phone" class="mytxt" placeholder="Enter Your Number Here" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">
+                            I am currently doing what kind to training:<font color="red">*</font>
+                        </td>
+                        <td>
+                            <input type="radio" name="type" />Online
+                            <input type="radio" name="type" />In person
+                            <input type="radio" name="type" />Both
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">i am what kind of trainer:<font color="red">*</font></td>
+                        <td>
+                            <input type="checkbox" />Health
+                            <input type="checkbox" />Education
+                            <input type="checkbox" />Arts
+                            <input type="checkbox" />Sports
+                            <input type="checkbox" />Business
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Certificate:(optional)</td>
+
+                        <td><input placeholder="Enter Your Certificate Here" class="mytxt" /></td>
+
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Describe yourself:(optional)</td>
+
+                        <td><input placeholder="Enter Your Information Here" class="mytxt" /></td>
+
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Location:<font color="red">*</font></td>
+                        <td>
+                            <input type="text" name="location" placeholder="Enter Your Location Here" class="mytxt" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">Email:<font color="red">*</font></td>
+                        <td>
+                            <input type="text" name="email" placeholder="Enter Your Email Here" class="mytxt" />
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td height="50px"></td>
+                        <td>We'll send a confirmation code to your email.<button>Continue</button></td>
+
+                    </tr>
+
+                    <tr>
+                        <td height="50px">code:<font color="red">*</font></td>
+                        <td>
+                            <input type="text" name="code" placeholder="Enter Your Code Here" class="mytxt" />
+                        </td>
+                    </tr>
+
+                    <tr align="center">
+                        <td colspan="2" height="50px">
+                            <input type="checkbox" id="agreement" name="agreement" />
+                            <label for="agreement" style=" color:red;">I agree all the agreement</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td height="50px">
+                            <input type="submit" name="submit_register" value="Create" />
+                        </td>
+
+                        <td>
+                            Already have a account!<a href="login_trainee">Login</a>
+                        </td>
+                    </tr>
+
+                </table>
+            </form>
+    </center>
+</body>
