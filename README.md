@@ -1,2 +1,0 @@
-# NewTrainerPro
-New
