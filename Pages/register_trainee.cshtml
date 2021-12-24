@@ -215,7 +215,7 @@
 
         <b>hi,welcome to TrainerPro, Please register your account here</b>
 
-        <div class="banners-container">
+        <div id="app" class="banners-container">
             <div class="banner" style="background-image: url('../img/bluegradient.jpg');">
                 <article class="banner">
                     <section class="banner-copy">
@@ -232,23 +232,27 @@
                 <table>
                     <tr>
                         <td height="50px">Username:<font color="red">*</font></td>
-                        <td><input class="mytxt" type="text" id="oText" name="tranee" placeholder="Enter User Name Here" /></td>
+                        <td><input class="mytxt" type="text" id="oText" asp-for="Trainee.Username" placeholder="Enter User Name Here" /></td>
 
                     </tr>
 
                     <tr>
                         <td height="50px">Password:<font color="red">*</font></td>
                         <td>
-                            <input class="mytxt" type="password" name="traneePW" placeholder="Enter Password Here" />
+                            <input class="mytxt" type="password" asp-for="Trainee.Password" placeholder="Enter Password Here" />
                         </td>
                     </tr>
 
                     <tr>
                         <td height="50px">Gender:<font color="red">*</font></td>
                         <td>
-                            <input type="radio" name="gender" />Male
-                            <input type="radio" name="gender" />Femail
-                            <input type="radio" name="gender" />Others
+                            @foreach (var item in Model.GenderModel)
+                            {
+                                <label><input type="radio" asp-for="@item.Selected" value="@item.Name" /></label><br />
+                            }
+                            @*<input type="radio" name="gender" />Male
+                                <input type="radio" name="gender" />Femail
+                                <input type="radio" name="gender" />Others*@
                         </td>
                     </tr>
 
@@ -256,14 +260,18 @@
                         <td height="50px">Phone:(optional)</td>
                         <td>
                             <select>
-                                <option selected>+61</option>
-                                <option>+51</option>
-                                <option>+41</option>
-                                <option>+31</option>
-                                <option>+21</option>
+                                @foreach (var item in Model.OptionalModel)
+                                {
+                                    <option selected="@item.Selected" value="@item.Name"></option>
+                                }
+                                @*<option selected>+61</option>
+                                    <option>+51</option>
+                                    <option>+41</option>
+                                    <option>+31</option>
+                                    <option>+21</option>*@
                             </select>
 
-                            <input class="mytxt" type="text" name="phone" placeholder="Enter Your Number Here" />
+                            <input class="mytxt" type="text" asp-for="Trainee.Phone" placeholder="Enter Your Number Here" />
 
                         </td>
                     </tr>
@@ -271,11 +279,15 @@
                     <tr>
                         <td height="50px">i am interesting in:<font color="red">*</font></td>
                         <td>
-                            <input type="checkbox" />Health
-                            <input type="checkbox" />Education
-                            <input type="checkbox" />Arts
-                            <input type="checkbox" />Sports
-                            <input type="checkbox" />Business
+                            @foreach (var item in Model.InterestingModel)
+                            {
+                                <label><input type="checkbox" asp-for="@item.Selected" value="@item.Name" /></label><br />
+                            }
+                            @*<input type="checkbox" />Health
+                                <input type="checkbox" />Education
+                                <input type="checkbox" />Arts
+                                <input type="checkbox" />Sports
+                                <input type="checkbox" />Business*@
                         </td>
                     </tr>
 
@@ -283,7 +295,7 @@
                         <td height="50px">Location:(optional)</td>
                         <td>
 
-                            <input class="mytxt" type="text" name="location" placeholder="Enter Your Location Here" />
+                            <input class="mytxt" type="text" asp-for="Trainee.Location" placeholder="Enter Your Location Here" />
 
                         </td>
                     </tr>
@@ -292,7 +304,7 @@
                         <td height="50px">Email:<font color="red">*</font></td>
                         <td>
 
-                            <input class="mytxt" type="text" name="email" placeholder="Enter Your Email Here" />
+                            <input class="mytxt" type="text" asp-for="Trainee.Email" placeholder="Enter Your Email Here" />
 
                         </td>
 
@@ -300,14 +312,14 @@
 
                     <tr>
                         <td></td>
-                        <td>We'll send a confirmation code to your email.<button>Continue</button></td>
+                        <td>We'll send a confirmation code to your email.<button v-on:click="Continue">Continue</button></td>
 
                     </tr>
 
                     <tr>
                         <td height="50px">code:<font color="red">*</font></td>
                         <td>
-                            <input class="mytxt" type="text" name="code" placeholder="Enter Your Code Here" />
+                            <input class="mytxt" type="text" asp-for="@Model.EmailCode"  placeholder="Enter Your Code Here" />
 
                         </td>
                     </tr>
@@ -321,7 +333,7 @@
 
                     <tr>
                         <td height="50px">
-                            <input type="submit" name="submit_register" value="Create" />
+                            <input type="submit" asp-page-handler="Save" name="submit_register" value="Create" />
                         </td>
 
                         <td>
@@ -332,4 +344,20 @@
                 </table>
             </form>
     </center>
+
+    <script src="~/js/vue.js"></script>
+    <script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello world'
+        },
+        methods:{
+            Continue: function () {
+                //formaction = "/Student/Add?handler=OnPostSendEmail"
+                alert("run...")
+            }
+        }
+    })
+    </script>
 </body>
