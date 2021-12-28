@@ -18,8 +18,7 @@ namespace Test_4._0.Data.Model
         public string Gender { get; set; }
         [Required]
         public string Phone { get; set; }
-        [Required]
-        public string Training { get; set; }
+
         [Required]
         public string KindOfTrainer { get; set; }
         public string Certificate { get; set; }
@@ -29,7 +28,10 @@ namespace Test_4._0.Data.Model
         [Required]
         public string Email { get; set; }
         [Required]
-        public string CreateDateTime { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        [Required]
+        public string EmailCode { get; set; }
+        public string SetCode { get; set; }
 
     }
 }

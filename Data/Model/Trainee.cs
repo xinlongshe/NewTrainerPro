@@ -23,9 +23,12 @@ namespace Test_4._0.Data.Model
         [Required]
         public string Email { get; set; }
         [Required]
-        public string CreateDateTime { get; set; }
+        public DateTime CreateDateTime { get; set; }
         [Required]
         public string Interesting { get; set; }
+        [Required]
+        public string EmailCode { get; set; }
+        public string SetCode { get; set; }
 
 
     }

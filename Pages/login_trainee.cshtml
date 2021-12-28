@@ -146,65 +146,91 @@
 </style>
 <body>
     <center>
+        <div id="app">
+            <b>hi,Welcome to TraineePro</b>
+            <br /><br /><br /><br />
+            <h3>@Model.TempData["Message"]</h3>
+            <form method="post">
+                <table>
+                    <tr>
+                        <td height="80px" colspan="2">
+                            <img src="~/images/user_icon.jpg" height="20" width="20" />
+                            <input type="text" asp-for="Admin.Username" placeholder="User Name" class="mytxt" size="30" height="15" />
+                            <span asp-validation-for="Admin.Username" class="text-danger"></span>
+                        </td>
 
-        <b>hi,Welcome to TrainerPro</b>
-        <br /><br /><br /><br />
-         <h3>@Model.TempData["Message"]</h3>
-        <form method="post">
-            <table>
-                <tr>
-                    <td height="80px" colspan="2">
-                        <img src="~/images/user_icon.jpg" height="20" width="20" />
-                        <input type="text" asp-for="Admin.Username" placeholder="User Name" class="mytxt" size="30" height="15" />
-                        <span asp-validation-for="Admin.Username" class="text-danger"></span>
-                    </td>
+                    </tr>
 
-                </tr>
-
-                <tr>
-                    <td height="80px" colspan="2">
-                        <img src="~/images/password_icon.jpg" height="20" width="20" />
-                        <input type="password" asp-for="Admin.Password" placeholder="Password" class="mytxt" size="30" height="15" />
-                        <span asp-validation-for="Admin.Password" class="text-danger"></span>
-                    </td>
-                </tr>
+                    <tr>
+                        <td height="80px" colspan="2">
+                            <img src="~/images/password_icon.jpg" height="20" width="20" />
+                            <input type="password" asp-for="Admin.Password" placeholder="Password" class="mytxt" size="30" height="15" />
+                            <span asp-validation-for="Admin.Password" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="50px">Gender:<font color="red">*</font></td>
+                        <td>
+                            <input type="radio" v-on:click="GenderChange" name="usertype" value="Trainee" />Trainee
+                            <input type="radio" v-on:click="GenderChange" name="usertype" value="Trainer" />Trainer
+                            <input type="radio" v-on:click="GenderChange" name="usertype" value="Admin" />Admin
+                            <input id="Hidden1" asp-for="Admin.UserType" type="hidden" />
+                            <span asp-validation-for="Admin.UserType" class="text-danger"></span>
+                        </td>
+                    </tr>
 
 
-                <tr>
-                    <td height="80px">
-                        <a href="trainee_profile">
-                            <button type="submit" asp-page-handler="Save" class="btn"><span>Login</span></button>
-                        </a>
-                    </td>
+                    <tr>
+                        <td height="80px">
+                            <a href="trainee_profile">
+                                <button type="submit" asp-page-handler="Save" class="btn"><span>Login</span></button>
+                            </a>
+                        </td>
 
-                    <td>
-                        Not yet a member?<a href="register_trainee">register</a>
+                        <td>
+                            Not yet a member?<a href="register_trainee">register</a>
+                        </td>
+                    </tr>
 
-                    </td>
-                </tr>
+                    <tr valign="bottom">
+                        <td colspan="2" height="300">
 
-                <tr valign="bottom">
-                    <td colspan="2" height="300">
+                            <a href="trainee_profile">
+                                <button class="btn"><span>Trainee</span></button>
+                            </a>
 
-                        <a href="trainee_profile">
-                            <button class="btn"><span>Trainee</span></button>
-                        </a>
+                            <a href="trainer_profile">
+                                <button class="btn"><span>Trainer</span></button>
+                            </a>
 
-                        <a href="trainer_profile">
-                            <button class="btn"><span>Trainer</span></button>
-                        </a>
+                            <a href="admin">
+                                <button class="btn"><span>Admin</span></button>
+                            </a>
+                        </td>
 
-                        <a href="admin">
-                            <button class="btn"><span>Admin</span></button>
-                        </a>
-                    </td>
+                    </tr>
 
-                </tr>
+                </table>
 
-            </table>
-
-        </form>
+            </form>
+        </div>
     </center>
+    <script src="~/js/vue.js"></script>
+    <script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        },
+        methods:{
+            GenderChange: function () {
+                var gender = $('input[name="usertype"]:checked ').val();
+                $("#Hidden1").val(gender);
+            }
+        }
+
+    })
+    </script>
 </body>
 </html>
 

@@ -228,11 +228,14 @@
                 </article>
             </div>
 
-            <form action=" " method="post">
+            <form method="post">
                 <table>
                     <tr>
                         <td height="50px">Username:<font color="red">*</font></td>
-                        <td><input class="mytxt" type="text" id="oText" asp-for="Trainee.Username" placeholder="Enter User Name Here" /></td>
+                        <td><input class="mytxt" type="text" id="oText" asp-for="Trainee.Username" placeholder="Enter User Name Here" />
+                            <span asp-validation-for="Trainee.Username" class="text-danger"></span>
+                        </td>
+
 
                     </tr>
 
@@ -246,48 +249,41 @@
                     <tr>
                         <td height="50px">Gender:<font color="red">*</font></td>
                         <td>
-                            @foreach (var item in Model.GenderModel)
-                            {
-                                <label><input type="radio" asp-for="@item.Selected" value="@item.Name" /></label><br />
-                            }
-                            @*<input type="radio" name="gender" />Male
-                                <input type="radio" name="gender" />Femail
-                                <input type="radio" name="gender" />Others*@
+                            <input type="radio" v-on:click="GenderChange" name="gender" value="Male" />Male
+                            <input type="radio" v-on:click="GenderChange" name="gender" value="Femail" />Femail
+                            <input type="radio" v-on:click="GenderChange" name="gender" value="Others" />Others
+                            <input id="Hidden1" asp-for="Trainee.Gender" type="hidden" />
+                            <span asp-validation-for="Trainee.Gender" class="text-danger"></span>
                         </td>
                     </tr>
 
                     <tr>
                         <td height="50px">Phone:(optional)</td>
                         <td>
-                            <select>
-                                @foreach (var item in Model.OptionalModel)
-                                {
-                                    <option selected="@item.Selected" value="@item.Name"></option>
-                                }
-                                @*<option selected>+61</option>
-                                    <option>+51</option>
-                                    <option>+41</option>
-                                    <option>+31</option>
-                                    <option>+21</option>*@
+                            <select id="codeSelect" v-on:change="selectFn($event)">
+                                <option selected value="+61">+61</option>
+                                <option value="+51">+51</option>
+                                <option value="+41">+41</option>
+                                <option value="+31">+31</option>
+                                <option value="+21">+21</option>
                             </select>
 
-                            <input class="mytxt" type="text" asp-for="Trainee.Phone" placeholder="Enter Your Number Here" />
-
+                            <input id="traineePhone" v-on:change="phoneChage" class="mytxt" type="text" placeholder="Enter Your Number Here" />
+                            <input id="Hidden3" asp-for="Trainee.Phone" type="hidden" />
+                            <span asp-validation-for="Trainee.Phone" class="text-danger"></span>
                         </td>
                     </tr>
 
                     <tr>
                         <td height="50px">i am interesting in:<font color="red">*</font></td>
                         <td>
-                            @foreach (var item in Model.InterestingModel)
-                            {
-                                <label><input type="checkbox" asp-for="@item.Selected" value="@item.Name" /></label><br />
-                            }
-                            @*<input type="checkbox" />Health
-                                <input type="checkbox" />Education
-                                <input type="checkbox" />Arts
-                                <input type="checkbox" />Sports
-                                <input type="checkbox" />Business*@
+                            <input class="interesting" type="checkbox" v-on:click="InterestingChange" value="Health" />Health
+                            <input class="interesting" type="checkbox" v-on:click="InterestingChange" value="Education" />Education
+                            <input class="interesting" type="checkbox" v-on:click="InterestingChange" value="Arts" />Arts
+                            <input class="interesting" type="checkbox" v-on:click="InterestingChange" value="Sports" />Sports
+                            <input class="interesting" type="checkbox" v-on:click="InterestingChange" value="Business" />Business
+                            <input class="interesting" id="Hidden2" asp-for="Trainee.Interesting" type="hidden" />
+                            <span asp-validation-for="Trainee.Interesting" class="text-danger"></span>
                         </td>
                     </tr>
 
@@ -296,6 +292,7 @@
                         <td>
 
                             <input class="mytxt" type="text" asp-for="Trainee.Location" placeholder="Enter Your Location Here" />
+                            @*<span asp-validation-for="Trainee.Location" class="text-danger"></span>*@
 
                         </td>
                     </tr>
@@ -305,35 +302,37 @@
                         <td>
 
                             <input class="mytxt" type="text" asp-for="Trainee.Email" placeholder="Enter Your Email Here" />
-
+                            <span asp-validation-for="Trainee.Email" class="text-danger"></span>
                         </td>
 
                     </tr>
 
                     <tr>
                         <td></td>
-                        <td>We'll send a confirmation code to your email.<button v-on:click="Continue">Continue</button></td>
+                        <td>We'll send a confirmation code to your email.<input id="btn" type="button" v-on:click="Continue" value="Continue" /> @*<button v-on:click="Continue">Continue</button>*@
+                        </td>
 
                     </tr>
 
                     <tr>
                         <td height="50px">code:<font color="red">*</font></td>
                         <td>
-                            <input class="mytxt" type="text" asp-for="@Model.EmailCode"  placeholder="Enter Your Code Here" />
-
+                            <input class="mytxt" type="text" asp-for="Trainee.EmailCode" placeholder="Enter Your Code Here" />
+                            <span asp-validation-for="Trainee.EmailCode" class="text-danger"></span>
+                            <input id="Hidden5" type="hidden" asp-for="Trainee.SetCode" />
                         </td>
                     </tr>
 
                     <tr align="center">
                         <td colspan="2" height="50px">
-                            <input type="checkbox" id="agreement" name="agreement" />
+                            <input type="checkbox" id="agreement" name="agreement" v-on:click="agreementChange" />
                             <label for="agreement" style=" color:red;">I agree all the agreement</label>
                         </td>
                     </tr>
 
                     <tr>
                         <td height="50px">
-                            <input type="submit" asp-page-handler="Save" name="submit_register" value="Create" />
+                            <input id="savebtn" disabled="true" type="submit" asp-page-handler="Save" name="submit_register" value="Create" />
                         </td>
 
                         <td>
@@ -350,14 +349,71 @@
     new Vue({
         el: '#app',
         data: {
-            message: 'Hello world'
+            message: ''
         },
         methods:{
             Continue: function () {
                 //formaction = "/Student/Add?handler=OnPostSendEmail"
-                alert("run...")
+                $.ajax({
+                    url: "register_trainee?handler=SendEmail",
+                    method: "Post",
+                    data: JSON.stringify($("#Trainee_Email").val()),
+                    contentType: "application/json;charset=UTF-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            $("#Hidden5").val(data.Code);
+                            alert(data.Mes);
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            },
+            InterestingChange: function () {
+                var spCodesTemp = "";
+                $('.interesting:input:checkbox:checked').each(function (i) {
+                    if (0 == i) {
+                        spCodesTemp = $(this).val();
+                    } else {
+                        spCodesTemp += ("," + $(this).val());
+                    }
+                });
+                $("#Hidden2").val(spCodesTemp);
+            },
+            GenderChange: function () {
+                var gender = $('input[name="gender"]:checked ').val();
+                $("#Hidden1").val(gender);
+            },
+            selectFn: function (e) {
+                //var code = $('#testSelect option:selected').text();
+                var phone = $("#traineePhone").val();
+                $("#Hidden3").val(e.target.value + phone);
+            },
+            phoneChage: function () {
+                 var code = $('#codeSelect option:selected').text();
+                var phone = $("#traineePhone").val();
+                $("#Hidden3").val(code + phone);
+            },
+            agreementChange: function () {
+                var isChecked = $('#agreement').prop('checked');
+                if (isChecked) {
+                    $("#savebtn").attr("disabled", false);
+                }
+                else {
+                    $("#savebtn").attr("disabled", true);
+                }
             }
-        }
+        },
+        mounted: function (){
+
+           // $("#savebtn").attr("disabled", true);
+        },
+        //created: function (){
+        //    alert(222);
+        //}
+
     })
     </script>
 </body>

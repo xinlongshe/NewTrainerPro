@@ -11,7 +11,7 @@ namespace Test_4._0.Common
 {
     public interface ISendMail
     {
-        Task SendMailAsync(string toAddress, string ccAddress, string subject, string body);
+        Task<string> SendMailAsync(string toAddress, string ccAddress, string subject, string body);
         Task<bool> IsMail(string email);
 
     }
@@ -23,16 +23,16 @@ namespace Test_4._0.Common
         {
             _sendMailConfig = mailConfig;
         }
-        public async Task SendMailAsync(string toAddress, string ccAddress, string subject, string body)
+        public async Task<string> SendMailAsync(string toAddress, string ccAddress, string subject, string body)
         {
             if (!_sendMailConfig.IsOpen)
             {
-                return;
+                return "0";
             }
             var isEmail = IsMail(toAddress).Result;
             if (!isEmail || string.IsNullOrEmpty(toAddress))
             {
-                return;
+                return "0";
             }
             try
             {
@@ -66,6 +66,7 @@ namespace Test_4._0.Common
             {
                 //_log.Error("error SendMailAsync 错误信息为：" + ex);
             }
+            return body;
 
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,9 @@ namespace TrainDEv.Pages
 {
     public class register_traineeModel : PageModel
     {
-        private string SetCode { get; set; }
+        //private string SetCode { get; set; }
         public string Message { get; set; }
-        public string EmailCode { get; set; }
+        //public string EmailCode { get; set; }
         private readonly IDapperRepository<Trainee> _traineeDapperRepository;
         private readonly ISendMail _sendMail;
         public register_traineeModel(IDapperRepository<Trainee> traineeDapperRepository, ISendMail sendMail)
@@ -25,57 +26,28 @@ namespace TrainDEv.Pages
         [BindProperty]
         public Trainee Trainee { get; set; }
 
-        public List<TraineeModel> InterestingModel { get; set; }
-        public List<TraineeModel> GenderModel { get; set; }
-        public List<TraineeModel> OptionalModel { get; set; }
 
         public IActionResult OnGet()
         {
-            InterestingModel.Add(new TraineeModel() { Selected = false,Name= "Health" }) ;
-            InterestingModel.Add(new TraineeModel() { Selected = false, Name = "Education" });
-            InterestingModel.Add(new TraineeModel() { Selected = false, Name = "Arts" });
-            InterestingModel.Add(new TraineeModel() { Selected = false, Name = "Sports" });
-            InterestingModel.Add(new TraineeModel() { Selected = false, Name = "Business" });
-
-            GenderModel.Add(new TraineeModel() { Selected = false, Name = "Male" });
-            GenderModel.Add(new TraineeModel() { Selected = false, Name = "Femail" });
-            GenderModel.Add(new TraineeModel() { Selected = false, Name = "Others" });
-
-            OptionalModel.Add(new TraineeModel() { Selected = false, Name = "+61" });
-            OptionalModel.Add(new TraineeModel() { Selected = false, Name = "+51" });
-            OptionalModel.Add(new TraineeModel() { Selected = false, Name = "+41" });
-            OptionalModel.Add(new TraineeModel() { Selected = false, Name = "+31" });
-            OptionalModel.Add(new TraineeModel() { Selected = false, Name = "+21" });
 
             return Page();
         }
         public IActionResult OnPostSave()
         {
-            string interestingStr = string.Empty;
-            foreach (var item in InterestingModel)
-            {
-                if (item.Selected)
-                {
-                    interestingStr += item.Name + ",";
-                }
-            }
-            string genderStr = GenderModel.Where(x => x.Selected).FirstOrDefault().Name;
-            string optionStr = OptionalModel.Where(x => x.Selected).FirstOrDefault().Name;
-            Trainee.Gender = genderStr;
-            Trainee.Interesting = interestingStr;
+            Trainee.CreateDateTime = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            if(SetCode!=EmailCode)
+            if (Trainee.SetCode != Trainee.EmailCode)
             {
                 TempData["Message"] = "Incorrect verification code";
                 return Page();
             }
 
             var adminList = _traineeDapperRepository.Add(Trainee);
-            if (adminList != null && adminList.Count() > 0)
+            if (adminList > 0)
             {
                 return RedirectToPage("login_trainee");
             }
@@ -85,8 +57,7 @@ namespace TrainDEv.Pages
                 return Page();
             }
         }
-
-        public string OnPostSendEmail()
+        public IActionResult OnPostSendEmail([FromBody] dynamic my)
         {
             string vc = "";
             Random rNum = new Random();//随机生成类
@@ -99,16 +70,14 @@ namespace TrainDEv.Pages
             {
                 vc += nums[i].ToString();
             }
-            _sendMail.SendMailAsync(Trainee.Email, "", "PrivacyDB", vc);
-            SetCode = vc;
-            return "";
+            var returnValue= _sendMail.SendMailAsync(my, "", "PrivacyDB", vc).Result;
+            var mes = "Sent successfully";
+            if (returnValue == "0")
+            {
+                mes = "Sending failed, configuration error";
+            }
+            return new JsonResult(new {Mes= mes, Code=vc});
         }
     }
-
-
-    public class TraineeModel
-    {
-        public  bool Selected { get; set; }
-        public string Name { get; set; }
-    }
+   
 }

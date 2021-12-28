@@ -15,6 +15,7 @@ using System.Reflection;
 using Test_4._0.Data;
 using Test_4._0.Data.Model;
 using Test_4._0.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Test_4._0
 {
@@ -74,6 +75,11 @@ namespace Test_4._0
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services.AddRazorPages();
+            services.AddMvc() .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                   .AddRazorPagesOptions(o =>
+                   {
+                       o.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+                   });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
