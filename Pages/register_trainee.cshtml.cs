@@ -13,20 +13,22 @@ namespace TrainDEv.Pages
 {
     public class register_traineeModel : PageModel
     {
-        //private string SetCode { get; set; }
         public string Message { get; set; }
-        //public string EmailCode { get; set; }
         private readonly IDapperRepository<Trainee> _traineeDapperRepository;
+        private readonly IDapperRepository<PrivacyUser> _userDapperRepository;
         private readonly ISendMail _sendMail;
-        public register_traineeModel(IDapperRepository<Trainee> traineeDapperRepository, ISendMail sendMail)
+        public register_traineeModel(IDapperRepository<Trainee> traineeDapperRepository, ISendMail sendMail, IDapperRepository<PrivacyUser> userDapperRepository)
         {
             _traineeDapperRepository = traineeDapperRepository;
+            _userDapperRepository = userDapperRepository;
             _sendMail = sendMail;
         }
         [BindProperty]
         public Trainee Trainee { get; set; }
-
-
+        [BindProperty]
+        public PrivacyUser User { get; set; }
+        [BindProperty]
+        public EmailCode emailCode { get; set; }
         public IActionResult OnGet()
         {
 
@@ -40,15 +42,18 @@ namespace TrainDEv.Pages
                 return Page();
             }
 
-            if (Trainee.SetCode != Trainee.EmailCode)
+            if (emailCode.ValueCode != emailCode.SentCode)
             {
                 TempData["Message"] = "Incorrect verification code";
                 return Page();
             }
-
-            var adminList = _traineeDapperRepository.Add(Trainee);
-            if (adminList > 0)
+            var traineeId = _traineeDapperRepository.Add(Trainee);
+            if (traineeId > 0)
             {
+                User.UserType = "Trainee";
+                User.FKId = traineeId;
+                _userDapperRepository.Add(User);
+
                 return RedirectToPage("login_trainee");
             }
             else

@@ -195,14 +195,14 @@
                 <table>
                     <tr>
                         <td height="50px">Username:<font color="red">*</font></td>
-                        <td><input type="text" asp-for="Trainer.Username" class="mytxt" placeholder="Enter User Name Here" /></td>
+                        <td><input type="text" asp-for="User.Username" class="mytxt" placeholder="Enter User Name Here" /></td>
 
                     </tr>
 
                     <tr>
                         <td height="50px">Password:<font color="red">*</font></td>
                         <td>
-                            <input type="password" asp-for="Trainer.Password" class="mytxt" placeholder="Enter Password Here" />
+                            <input type="password" asp-for="User.Password" class="mytxt" placeholder="Enter Password Here" />
                         </td>
                     </tr>
 
@@ -287,9 +287,9 @@
                     <tr>
                         <td height="50px">code:<font color="red">*</font></td>
                         <td>
-                            <input type="text" asp-for="Trainer.EmailCode" placeholder="Enter Your Code Here" class="mytxt" />
-                            <span asp-validation-for="Trainer.EmailCode" class="text-danger"></span>
-                            <input id="Hidden5" type="hidden" asp-for="Trainer.SetCode" />
+                            <input type="text" asp-for="emailCode.ValueCode" placeholder="Enter Your Code Here" class="mytxt" />
+                            <span asp-validation-for="emailCode.ValueCode" class="text-danger"></span>
+                            <input id="Hidden5" type="hidden" asp-for="emailCode.SentCode" />
                         </td>
                     </tr>
 

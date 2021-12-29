@@ -15,15 +15,20 @@ namespace TrainDEv.Pages
 
         public string Message { get; set; }
         private readonly IDapperRepository<Trainer> _trainerDapperRepository;
+        private readonly IDapperRepository<PrivacyUser> _userDapperRepository;
         private readonly ISendMail _sendMail;
-        public register_trainerModel(IDapperRepository<Trainer> trainerDapperRepository, ISendMail sendMail)
+        public register_trainerModel(IDapperRepository<Trainer> trainerDapperRepository, ISendMail sendMail, IDapperRepository<PrivacyUser> userDapperRepository)
         {
             _trainerDapperRepository = trainerDapperRepository;
             _sendMail = sendMail;
+            _userDapperRepository = userDapperRepository;
         }
         [BindProperty]
         public Trainer Trainer { get; set; }
-
+        [BindProperty]
+        public PrivacyUser User { get; set; }
+        [BindProperty]
+        public EmailCode emailCode { get; set; }
         public IActionResult OnGet()
         {
             return Page();
@@ -36,15 +41,18 @@ namespace TrainDEv.Pages
                 return Page();
             }
 
-            if (Trainer.SetCode != Trainer.EmailCode)
+            if (emailCode.ValueCode != emailCode.SentCode)
             {
                 TempData["Message"] = "Incorrect verification code";
                 return Page();
             }
 
-            var adminList = _trainerDapperRepository.Add(Trainer);
-            if (adminList > 0)
+            var trainerId = _trainerDapperRepository.Add(Trainer);
+            if (trainerId > 0)
             {
+                User.UserType = "Trainer";
+                User.FKId = trainerId;
+                _userDapperRepository.Add(User);
                 return RedirectToPage("login_trainee");
             }
             else

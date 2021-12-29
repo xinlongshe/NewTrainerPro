@@ -11,10 +11,6 @@ namespace Test_4._0.Data.Model
 
         public long Id { get; set; }
         [Required]
-        public string Username { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
         public string Gender { get; set; }
         [Required]
         public string Phone { get; set; }
@@ -26,9 +22,6 @@ namespace Test_4._0.Data.Model
         public DateTime CreateDateTime { get; set; }
         [Required]
         public string Interesting { get; set; }
-        [Required]
-        public string EmailCode { get; set; }
-        public string SetCode { get; set; }
 
 
     }

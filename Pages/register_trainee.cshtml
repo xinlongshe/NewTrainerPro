@@ -232,17 +232,15 @@
                 <table>
                     <tr>
                         <td height="50px">Username:<font color="red">*</font></td>
-                        <td><input class="mytxt" type="text" id="oText" asp-for="Trainee.Username" placeholder="Enter User Name Here" />
-                            <span asp-validation-for="Trainee.Username" class="text-danger"></span>
+                        <td><input class="mytxt" type="text" id="oText" asp-for="User.Username" placeholder="Enter User Name Here" />
+                            <span asp-validation-for="User.Username" class="text-danger"></span>
                         </td>
-
-
                     </tr>
 
                     <tr>
                         <td height="50px">Password:<font color="red">*</font></td>
                         <td>
-                            <input class="mytxt" type="password" asp-for="Trainee.Password" placeholder="Enter Password Here" />
+                            <input class="mytxt" type="password" asp-for="User.Password" placeholder="Enter Password Here" />
                         </td>
                     </tr>
 
@@ -317,9 +315,9 @@
                     <tr>
                         <td height="50px">code:<font color="red">*</font></td>
                         <td>
-                            <input class="mytxt" type="text" asp-for="Trainee.EmailCode" placeholder="Enter Your Code Here" />
-                            <span asp-validation-for="Trainee.EmailCode" class="text-danger"></span>
-                            <input id="Hidden5" type="hidden" asp-for="Trainee.SetCode" />
+                            <input class="mytxt" type="text" asp-for="emailCode.ValueCode" placeholder="Enter Your Code Here" />
+                            <span asp-validation-for="emailCode.ValueCode" class="text-danger"></span>
+                            <input id="Hidden5" type="hidden" asp-for="emailCode.SentCode" />
                         </td>
                     </tr>
 

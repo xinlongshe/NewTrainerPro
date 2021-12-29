@@ -40,7 +40,7 @@ namespace Test_4._0
             services.AddSingleton(config);
             services.AddScoped<ISendMail, SendMail>();
 
-            services.AddTransient<IDapperRepository<Admin>, DapperRepository<Admin>>();
+            services.AddTransient<IDapperRepository<PrivacyUser>, DapperRepository<PrivacyUser>>();
             services.AddTransient<IDapperRepository<Trainer>, DapperRepository<Trainer>>();
             services.AddTransient<IDapperRepository<Trainee>, DapperRepository<Trainee>>();
 

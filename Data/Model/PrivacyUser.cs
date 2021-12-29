@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test_4._0.Data.Model
 {
-    public class Admin
+    public class PrivacyUser
     {
         public long Id { get; set; }
         [Required]
@@ -15,5 +15,7 @@ namespace Test_4._0.Data.Model
         public string Password { get; set; }
 
         public string UserType { get; set; }
+
+        public long FKId { get; set; }
     }
 }

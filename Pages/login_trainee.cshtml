@@ -155,8 +155,8 @@
                     <tr>
                         <td height="80px" colspan="2">
                             <img src="~/images/user_icon.jpg" height="20" width="20" />
-                            <input type="text" asp-for="Admin.Username" placeholder="User Name" class="mytxt" size="30" height="15" />
-                            <span asp-validation-for="Admin.Username" class="text-danger"></span>
+                            <input type="text" asp-for="User.Username" placeholder="User Name" class="mytxt" size="30" height="15" />
+                            <span asp-validation-for="User.Username" class="text-danger"></span>
                         </td>
 
                     </tr>
@@ -164,22 +164,10 @@
                     <tr>
                         <td height="80px" colspan="2">
                             <img src="~/images/password_icon.jpg" height="20" width="20" />
-                            <input type="password" asp-for="Admin.Password" placeholder="Password" class="mytxt" size="30" height="15" />
-                            <span asp-validation-for="Admin.Password" class="text-danger"></span>
+                            <input type="password" asp-for="User.Password" placeholder="Password" class="mytxt" size="30" height="15" />
+                            <span asp-validation-for="User.Password" class="text-danger"></span>
                         </td>
                     </tr>
-                    <tr>
-                        <td height="50px">Gender:<font color="red">*</font></td>
-                        <td>
-                            <input type="radio" v-on:click="GenderChange" name="usertype" value="Trainee" />Trainee
-                            <input type="radio" v-on:click="GenderChange" name="usertype" value="Trainer" />Trainer
-                            <input type="radio" v-on:click="GenderChange" name="usertype" value="Admin" />Admin
-                            <input id="Hidden1" asp-for="Admin.UserType" type="hidden" />
-                            <span asp-validation-for="Admin.UserType" class="text-danger"></span>
-                        </td>
-                    </tr>
-
-
                     <tr>
                         <td height="80px">
                             <a href="trainee_profile">

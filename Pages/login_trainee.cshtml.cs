@@ -16,18 +16,18 @@ namespace TrainDEv.Pages
 
         public string UserType { get; set; }
 
-        private readonly IDapperRepository<Admin> _adminDapperRepository;
+        private readonly IDapperRepository<PrivacyUser> _userDapperRepository;
         private readonly IDapperRepository<Trainee> _traineeDapperRepository;
         private readonly IDapperRepository<Trainer> _trainerDapperRepository;
-        public login_traineeModel(IDapperRepository<Admin> adminDapperRepository, IDapperRepository<Trainee> traineeDapperRepository, IDapperRepository<Trainer> trainerDapperRepository)
+        public login_traineeModel(IDapperRepository<PrivacyUser> userDapperRepository, IDapperRepository<Trainee> traineeDapperRepository, IDapperRepository<Trainer> trainerDapperRepository)
         {
-            _adminDapperRepository = adminDapperRepository;
+            _userDapperRepository = userDapperRepository;
             _traineeDapperRepository = traineeDapperRepository;
             _trainerDapperRepository = trainerDapperRepository;
         }
 
         [BindProperty]
-        public Admin Admin{ get; set; }
+        public PrivacyUser User{ get; set; }
 
         public IActionResult OnGet()
         {
@@ -40,50 +40,29 @@ namespace TrainDEv.Pages
             {
                 return Page();
             }
-            if(Admin.UserType == "Admin")
+            string sql = "select * from PrivacyUser where Username='" + User.Username + "' and Password='" + User.Password + "'";
+            var list = _userDapperRepository.GetList(sql, null);
+            if (list != null && list.Count() > 0)
             {
-                string sql = "select * from Admin where Username='" + Admin.Username + "' and Password='" + Admin.Password + "'";
-                var list = _adminDapperRepository.GetList(sql, null);
-                if (list != null && list.Count() > 0)
-                {
-                    return RedirectToPage("admin");
-                }
-                else
-                {
-                    TempData["Message"] = "Wrong password or account does not exist";
-                    return Page();
-                }
-
-            }
-            else if(Admin.UserType == "Trainee")
-            {
-                string sql = "select * from Trainee where Username='" + Admin.Username + "' and Password='" + Admin.Password + "'";
-                var list = _traineeDapperRepository.GetList(sql, null);
-                if (list != null && list.Count() > 0)
+                var userEntity = list.FirstOrDefault();
+                if(userEntity.UserType=="Trainee")
                 {
                     return RedirectToPage("trainee_profile");
                 }
-                else
-                {
-                    TempData["Message"] = "Wrong password or account does not exist";
-                    return Page();
-                }
-            }
-            else
-            {
-                string sql = "select * from Trainer where Username='" + Admin.Username + "' and Password='" + Admin.Password + "'";
-                var list = _trainerDapperRepository.GetList(sql, null);
-                if (list != null && list.Count() > 0)
+                else if (userEntity.UserType == "Trainer")
                 {
                     return RedirectToPage("trainer_profile");
                 }
                 else
                 {
-                    TempData["Message"] = "Wrong password or account does not exist";
-                    return Page();
+                    return RedirectToPage("admin");
                 }
             }
-           
+            else
+            {
+                TempData["Message"] = "Wrong password or account does not exist";
+                return Page();
+            }
         }
 
     }

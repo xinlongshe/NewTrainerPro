@@ -8,12 +8,7 @@ namespace Test_4._0.Data.Model
 {
     public class Trainer
     {
-
         public long Id { get; set; }
-        [Required]
-        public string Username { get; set; }
-        [Required]
-        public string Password { get; set; }
         [Required]
         public string Gender { get; set; }
         [Required]
@@ -29,9 +24,6 @@ namespace Test_4._0.Data.Model
         public string Email { get; set; }
         [Required]
         public DateTime CreateDateTime { get; set; }
-        [Required]
-        public string EmailCode { get; set; }
-        public string SetCode { get; set; }
 
     }
 }
